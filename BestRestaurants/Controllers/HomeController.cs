@@ -10,6 +10,7 @@ namespace BestRestaurants.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
+      Dictionary<string, object> model = new Dictionary<string, object>();
       List<Restaurant> allRestaurants = Restaurant.GetAll();
 
       return View(allRestaurants);
@@ -42,7 +43,7 @@ namespace BestRestaurants.Controllers
     [HttpGet("/{name}/{id}/restaurantlist")]
     public ActionResult ViewRestaurantList(int id)
     {
-      Console.WriteLine("hello we are in Get");
+      // Console.WriteLine("hello we are in Get");
 
       Dictionary<string, object> model = new Dictionary<string, object>();
       Cuisine selectedCuisine = Cuisine.Find(id); //Cuisine is selected as an object

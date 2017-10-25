@@ -18,7 +18,7 @@ namespace BestRestaurants.Tests
     public void Dispose()
     {
       Restaurant.DeleteAll();
-      Category.DeleteAll();
+      Cuisine.DeleteAll();
     }
 
     [TestMethod]

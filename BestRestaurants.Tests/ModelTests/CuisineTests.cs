@@ -101,7 +101,7 @@ namespace BestRestaurants.Tests
 
 
       List<Restaurant> testRestaurantList = new List<Restaurant> {firstRestaurant, secondRestaurant};
-      List<Restaurant> resultRestaurantList = testCuisine.GetRestaurant();
+      List<Restaurant> resultRestaurantList = testCuisine.GetRestaurants();
 
       CollectionAssert.AreEqual(testRestaurantList, resultRestaurantList);
     }

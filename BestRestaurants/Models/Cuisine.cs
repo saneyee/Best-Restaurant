@@ -2,28 +2,29 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
 
-namespace ToDoList.Models
+namespace BestRestaurants.Models
 {
-    public class Category
+    public class Cuisine
     {
         private string _name;
         private int _id;
-        public Category(string name, int id = 0)
+
+        public Cuisine(string name, int id = 0)
         {
             _name = name;
             _id = id;
         }
 
-        public override bool Equals(System.Object otherCategory)
+        public override bool Equals(System.Object otherCuisine)
         {
-            if (!(otherCategory is Category))
+            if (!(otherCuisine is Cuisine))
             {
                 return false;
             }
             else
             {
-                Category newCategory = (Category) otherCategory;
-                return this.GetId().Equals(newCategory.GetId());
+                Cuisine newCuisine = (Cuisine) otherCuisine;
+                return this.GetId().Equals(newCuisine.GetId());
             }
         }
 
@@ -42,36 +43,36 @@ namespace ToDoList.Models
             return _id;
         }
 
-        public List<Task> GetTasks()
+        public List<Task> GetRestaurants()
         {
-            List<Task> allCategoryTasks = new List<Task> {};
+            List<Task> allCuisineRestaurants = new List<Task> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM tasks WHERE category_id = @category_id ORDER BY due_date DESC;";
+            cmd.CommandText = @"SELECT * FROM restaurants WHERE cuisine_id = @cuisine_id;";
 
-            MySqlParameter categoryId = new MySqlParameter();
-            categoryId.ParameterName = "@category_id";
-            categoryId.Value = this._id;
-            cmd.Parameters.Add(categoryId);
+            MySqlParameter cuisineId = new MySqlParameter();
+            cuisineId.ParameterName = "@cuisine_id";
+            cuisineId.Value = this._id;
+            cmd.Parameters.Add(cuisineId);
 
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
             while(rdr.Read())
             {
-              int taskId = rdr.GetInt32(0);
-              string taskDescription = rdr.GetString(1);
-              int taskCategoryId = rdr.GetInt32(2);
-              string taskDueDate = rdr.GetString(3);
-              Task newTask = new Task(taskDescription, taskCategoryId, taskDueDate, taskId);
-              allCategoryTasks.Add(newTask);
+              int restaurantId = rdr.GetInt32(0);
+              string restaurantName = rdr.GetString(1);
+              int restaurantCuisineId = rdr.GetInt32(2);
+
+              Restaurant newRestaurant = new Restaurant(restaurantName, restaurantCuisineId, restaurantId);
+              allCuisineRestaurants.Add(newRestaurant);
             }
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return allCategoryTasks;
+            return allCuisineRestaurants;
         }
 
         public void Save()
@@ -80,7 +81,7 @@ namespace ToDoList.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO categories (name) VALUES (@name);";
+            cmd.CommandText = @"INSERT INTO cuisines (name) VALUES (@name);";
 
             MySqlParameter name = new MySqlParameter();
             name.ParameterName = "@name";
@@ -96,34 +97,34 @@ namespace ToDoList.Models
             }
 
         }
-        public static List<Category> GetAll()
+        public static List<Cuisine> GetAll()
         {
-            List<Category> allCategories = new List<Category> {};
+            List<Cuisine> allCuisines = new List<Cuisine> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM categories;";
+            cmd.CommandText = @"SELECT * FROM cuisines;";
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
             while(rdr.Read())
             {
-              int CategoryId = rdr.GetInt32(0);
-              string CategoryName = rdr.GetString(1);
-              Category newCategory = new Category(CategoryName, CategoryId);
-              allCategories.Add(newCategory);
+              int cuisineId = rdr.GetInt32(0);
+              string cuisineName = rdr.GetString(1);
+              Cuisine newCuisine = new Cuisine(cuisineName, cuisineId);
+              allCuisines.Add(newCuisine);
             }
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return allCategories;
+            return allCuisines;
         }
-        public static Category Find(int id)
+        public static Cuisine Find(int id)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM categories WHERE id = (@searchId);";
+            cmd.CommandText = @"SELECT * FROM Cuisines WHERE id = (@searchId);";
 
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
@@ -131,28 +132,28 @@ namespace ToDoList.Models
             cmd.Parameters.Add(searchId);
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int CategoryId = 0;
-            string CategoryName = "";
+            int cuisineId = 0;
+            string cuisineName = "";
 
             while(rdr.Read())
             {
-              CategoryId = rdr.GetInt32(0);
-              CategoryName = rdr.GetString(1);
+              cuisineId = rdr.GetInt32(0);
+              cuisineName = rdr.GetString(1);
             }
-            Category newCategory = new Category(CategoryName, CategoryId);
+            Cuisine newCuisine = new Cuisine(cuisineName, cuisineId);
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return newCategory;
+            return newCuisine;
         }
         public static void DeleteAll()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM categories;";
+            cmd.CommandText = @"DELETE FROM cuisines;";
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)

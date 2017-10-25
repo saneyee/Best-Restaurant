@@ -1,23 +1,23 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ToDoList.Models;
+using BestRestaurants.Models;
 using System.Collections.Generic;
 using System;
 
-namespace ToDoList.Tests
+namespace BestRestaurants.Tests
 {
 
   [TestClass]
-  // public class TaskTests : IDisposable
-  public class TaskTests : IDisposable
+  // public class RestaurantTests : IDisposable
+  public class RestaurantTests : IDisposable
   {
-    public TaskTests()
+    public RestaurantTests()
     {
-        DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo_test;";
+        DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=bestrestaurants_test;";
     }
 
     public void Dispose()
     {
-      Task.DeleteAll();
+      Restaurant.DeleteAll();
       Category.DeleteAll();
     }
 
@@ -25,33 +25,33 @@ namespace ToDoList.Tests
     public void GetAll_DatabaseEmptyAtFirst_0()
     {
       //Arrange, Act
-      int result = Task.GetAll().Count;
+      int result = Restaurant.GetAll().Count;
 
       //Assert
       Assert.AreEqual(0, result);
     }
 
     [TestMethod]
-    public void Equals_OverrideTrueIfDescriptionsAreTheSame_Task()
+    public void Equals_OverrideTrueIfRestaurantsAreTheSame_Restaurant()
     {
       // Arrange, Act
-      Task firstTask = new Task("Mow the lawn",1,"2017-01-01");
-      Task secondTask = new Task("Mow the lawn",1,"2017-01-01");
+      Restaurant firstRestaurant = new Restaurant("Taco Bell",1);
+      Restaurant secondRestaurant = new Restaurant("Taco Bell",1);
 
       // Assert
-      Assert.AreEqual(firstTask, secondTask);
+      Assert.AreEqual(firstRestaurant, secondRestaurant);
     }
 
     [TestMethod]
-    public void Save_SavesToDatabase_TaskList()
+    public void Save_SavesToDatabase_RestaurantList()
     {
       //Arrange
-      Task testTask = new Task("Mow the lawn",1,"2017-01-01");
+      Restaurant testRestaurant = new Restaurant("Taco Bell",1);
 
       //Act
-      testTask.Save();
-      List<Task> result = Task.GetAll();
-      List<Task> testList = new List<Task>{testTask};
+      testRestaurant.Save();
+      List<Restaurant> result = Restaurant.GetAll();
+      List<Restaurant> testList = new List<Restaurant>{testRestaurant};
 
       //Assert
       CollectionAssert.AreEqual(testList, result);
@@ -61,68 +61,65 @@ namespace ToDoList.Tests
     public void Save_AssignsIdToObject_Id()
     {
       //Arrange
-      Task testTask = new Task("Mow the lawn",1,"2017-01-01");
+      Restaurant testRestaurant = new Restaurant("Taco Bell",1);
 
       //Act
-      testTask.Save();
-      Task savedTask = Task.GetAll()[0];
+      testRestaurant.Save();
+      Restaurant savedRestaurant = Restaurant.GetAll()[0];
 
-      int result = savedTask.GetId();
-      int testId = testTask.GetId();
+      int result = savedRestaurant.GetId();
+      int testId = testRestaurant.GetId();
 
       //Assert
       Assert.AreEqual(testId, result);
     }
 
     [TestMethod]
-    public void Find_FindsTaskInDatabase_Task()
+    public void Find_FindsRestaurantInDatabase_Restaurant()
     {
       //Arrange
-      Task testTask = new Task("Mow the lawn",1,"2017-01-01");
-      testTask.Save();
+      Restaurant testRestaurant = new Restaurant("Taco Bell",1);
+      testRestaurant.Save();
 
       //Act
-      Task foundTask = Task.Find(testTask.GetId());
+      Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
 
       //Assert
-      Assert.AreEqual(testTask, foundTask);
+      Assert.AreEqual(testRestaurant, foundRestaurant);
     }
     [TestMethod]
-    public void Update_UpdatesTaskInDatabase_String()
+    public void Update_UpdatesRestaurantInDatabase_String()
     {
       //Arrange
-      string description = "Walk the Dog";
-      Task testTask = new Task(description, 1, "2017-01-01");
-      testTask.Save();
-      string newDescription = "Mow the lawn";
+      string restaurantName = "Japonessa";
+      Restaurant testRestaurant = new Restaurant(restaurantName, 1);
+      testRestaurant.Save();
+      string newRestaurantName = "Taco Bell";
 
       //Act
-      testTask.UpdateDescription(newDescription);
+      testRestaurant.UpdateRestaurantName(newRestaurantName);
 
-      string result = Task.Find(testTask.GetId()).GetDescription();
+      string result = Restaurant.Find(testRestaurant.GetId()).GetRestaurantName();
 
       //Assert
-      Assert.AreEqual(newDescription, result);
+      Assert.AreEqual(newRestaurantName, result);
     }
 
     [TestMethod]
-    public void DeleteTask_DeleteTaskInDatabase_Null()
+    public void DeleteRestaurant_DeleteRestaurantInDatabase_Null()
     {
       //Arrange
-      string description = "Feed the Fish";
-      Task testTask = new Task(description, 1, "2017-01-01");
-      testTask.Save();
-      // string deletedTask = "";
+      string restaurantName = "Taco Bell";
+      Restaurant testRestaurant = new Restaurant(restaurantName, 1);
+      testRestaurant.Save();
+      // string deletedRestaurant = "";
 
       //Act
-      testTask.DeleteTask();
-      int result = Task.GetAll().Count;
+      testRestaurant.DeleteRestaurant();
+      int result = Restaurant.GetAll().Count;
 
       //Assert
       Assert.AreEqual(0, result);
-
-
-
 
     }
   }

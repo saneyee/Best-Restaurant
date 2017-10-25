@@ -1,49 +1,55 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
-using ToDoList.Models;
+using BestRestaurants.Models;
 
-namespace ToDoList.Tests
+namespace BestRestaurants.Tests
 {
   [TestClass]
-  public class CategoryTests : IDisposable
+  public class CuisineTests : IDisposable
   {
-        public CategoryTests()
+        public CuisineTests()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889 ;database=todo_test;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889 ;database=bestrestaurants_test;";
+        }
+
+        public void Dispose()
+        {
+          Restaurant.DeleteAll();
+          Cuisine.DeleteAll();
         }
 
        [TestMethod]
        public void GetAll_CategoriesEmptyAtFirst_0()
        {
          //Arrange, Act
-         int result = Category.GetAll().Count;
+         int result = Cuisine.GetAll().Count;
 
          //Assert
          Assert.AreEqual(0, result);
        }
 
       [TestMethod]
-      public void Equals_ReturnsTrueForSameName_Category()
+      public void Equals_ReturnsTrueForSameName_Cuisine()
       {
         //Arrange, Act
-        Category firstCategory = new Category("Household chores");
-        Category secondCategory = new Category("Household chores");
+        Cuisine firstCuisine = new Cuisine("Mexican");
+        Cuisine secondCuisine = new Cuisine("Mexican");
 
         //Assert
-        Assert.AreEqual(firstCategory, secondCategory);
+        Assert.AreEqual(firstCuisine, secondCuisine);
       }
 
       [TestMethod]
-      public void Save_SavesCategoryToDatabase_CategoryList()
+      public void Save_SavesCuisineToDatabase_CuisineList()
       {
         //Arrange
-        Category testCategory = new Category("Household chores");
-        testCategory.Save();
+        Cuisine testCuisine = new Cuisine("Mexican");
+        testCuisine.Save();
 
         //Act
-        List<Category> result = Category.GetAll();
-        List<Category> testList = new List<Category>{testCategory};
+        List<Cuisine> result = Cuisine.GetAll();
+        List<Cuisine> testList = new List<Cuisine>{testCuisine};
 
         //Assert
         CollectionAssert.AreEqual(testList, result);
@@ -51,17 +57,17 @@ namespace ToDoList.Tests
 
 
      [TestMethod]
-     public void Save_DatabaseAssignsIdToCategory_Id()
+     public void Save_DatabaseAssignsIdToCuisine_Id()
      {
        //Arrange
-       Category testCategory = new Category("Household chores");
-       testCategory.Save();
+       Cuisine testCuisine = new Cuisine("Mexican");
+       testCuisine.Save();
 
        //Act
-       Category savedCategory = Category.GetAll()[0];
+       Cuisine savedCuisine = Cuisine.GetAll()[0];
 
-       int result = savedCategory.GetId();
-       int testId = testCategory.GetId();
+       int result = savedCuisine.GetId();
+       int testId = testCuisine.GetId();
 
        //Assert
        Assert.AreEqual(testId, result);
@@ -69,41 +75,36 @@ namespace ToDoList.Tests
 
 
     [TestMethod]
-    public void Find_FindsCategoryInDatabase_Category()
+    public void Find_FindsCuisineInDatabase_Cuisine()
     {
       //Arrange
-      Category testCategory = new Category("Household chores");
-      testCategory.Save();
+      Cuisine testCuisine = new Cuisine("Mexican");
+      testCuisine.Save();
 
       //Act
-      Category foundCategory = Category.Find(testCategory.GetId());
+      Cuisine foundCuisine = Cuisine.Find(testCuisine.GetId());
 
       //Assert
-      Assert.AreEqual(testCategory, foundCategory);
+      Assert.AreEqual(testCuisine, foundCuisine);
     }
 
     [TestMethod]
-    public void GetTasks_RetrievesAllTasksWithCategory_TaskList()
+    public void GetRestaurants_RetrievesAllRestaurantsWithCuisine_RestaurantList()
     {
-      Category testCategory = new Category("Household chores");
-      testCategory.Save();
+      Cuisine testCuisine = new Cuisine("Mexican");
+      testCuisine.Save();
 
-      Task firstTask = new Task("Mow the lawn", testCategory.GetId(), "2017-01-01");
-      firstTask.Save();
-      Task secondTask = new Task("Do the dishes", testCategory.GetId(), "2017-01-01");
-      secondTask.Save();
+      Restaurant firstRestaurant = new Restaurant("Mexican", testCuisine.GetId());
+      firstRestaurant.Save();
+      Restaurant secondRestaurant = new Restaurant("Japanese", testCuisine.GetId());
+      secondRestaurant.Save();
 
 
-      List<Task> testTaskList = new List<Task> {firstTask, secondTask};
-      List<Task> resultTaskList = testCategory.GetTasks();
+      List<Restaurant> testRestaurantList = new List<Restaurant> {firstRestaurant, secondRestaurant};
+      List<Restaurant> resultRestaurantList = testCuisine.GetRestaurant();
 
-      CollectionAssert.AreEqual(testTaskList, resultTaskList);
+      CollectionAssert.AreEqual(testRestaurantList, resultRestaurantList);
     }
 
-    public void Dispose()
-    {
-      Task.DeleteAll();
-      Category.DeleteAll();
-    }
   }
 }

@@ -12,7 +12,7 @@ namespace BestRestaurants.Models
     private int _id;
 
 
-    public Task(string restaurantName, int cuisineId, int Id = 0)
+    public Restaurant(string restaurantName, int cuisineId, int Id = 0)
     {
       _restaurantName = restaurantName;
       _cuisineId = cuisineId;
@@ -52,7 +52,7 @@ namespace BestRestaurants.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE restaurants SET restaurantname = @newRestaurantName WHERE id = @searchId;";
+      cmd.CommandText = @"UPDATE restaurants SET restaurant_name = @newRestaurantName WHERE id = @searchId;";
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
@@ -111,7 +111,7 @@ namespace BestRestaurants.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO restaurants (restaurantName, cuisine_id) VALUES (@restaurantName, @cuisine_id);";
+      cmd.CommandText = @"INSERT INTO restaurants (restaurant_name, cuisine_id) VALUES (@restaurantName, @cuisine_id);";
 
       MySqlParameter restaurantName = new MySqlParameter();
       restaurantName.ParameterName = "@restaurantName";

@@ -1,28 +1,26 @@
-<h1>To Do List Homepage</h1>
-
+<h1>Best Restaurants Homepage</h1>
+<hr>
 @if (@Model.Count == 0)
 {
-  <h3>No tasks have been added yet!</h3>
+  <h3>No restaurants have been added yet!</h3>
 }
 
 <table>
 <tr>
   <th><strong>Id</strong></th>
-  <th><strong>Task</strong></th>
-  <th><strong>Category</strong></th>
-  <th><strong>Due Date</strong></th>
+  <th><strong>Restaurant</strong></th>
+  <th><strong>Cuisine</strong></th>
 </tr>
-@* Tasks will be a list of Task objects from the entire database *@
-@foreach (var task in Model)
+@* Restaurants will be a list of Restaurant objects from the entire database *@
+@foreach (var restaurant in Model)
 {
   <tr>
-    <th>@task.GetId()</th>
-    <th>@task.GetDescription()</th>
-    <th>@task.GetCategoryId()</th>
-    <th>@task.GetDueDate()</th>
+    <th>@restaurant.GetId()</th>
+    <th>@restaurant.GetRestaurantName()</th>
+    <th>@restaurant.GetCuisineId()</th>
   </tr>
 }
 </table>
 
-<a href="/category/add">Add Category</a> <br>
-<a href="/category/list">View Categories</a>
+<a href="/cuisine/add">Add Cuisine</a> <br>
+<a href="/cuisine/list">View Cuisines</a>

@@ -43,9 +43,9 @@ namespace BestRestaurants.Models
             return _id;
         }
 
-        public List<Task> GetRestaurants()
+        public List<Restaurant> GetRestaurants()
         {
-            List<Task> allCuisineRestaurants = new List<Task> {};
+            List<Restaurant> allCuisineRestaurants = new List<Restaurant> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
@@ -124,7 +124,7 @@ namespace BestRestaurants.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM Cuisines WHERE id = (@searchId);";
+            cmd.CommandText = @"SELECT * FROM cuisines WHERE id = (@searchId);";
 
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";

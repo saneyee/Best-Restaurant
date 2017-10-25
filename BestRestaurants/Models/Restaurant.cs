@@ -6,18 +6,15 @@ namespace BestRestaurants.Models
 {
   public class Restaurant
   {
-
     private string _restaurantName;
     private int _cuisineId;
     private int _id;
-
 
     public Restaurant(string restaurantName, int cuisineId, int Id = 0)
     {
       _restaurantName = restaurantName;
       _cuisineId = cuisineId;
       _id = Id;
-
     }
 
     public override bool Equals(System.Object otherRestaurant)
@@ -33,7 +30,7 @@ namespace BestRestaurants.Models
         bool restaurantNameEquality = (this.GetRestaurantName() == newRestaurant.GetRestaurantName());
         bool cuisineEquality = this.GetCuisineId() == newRestaurant.GetCuisineId();
 
-                return (idEquality && restaurantNameEquality && cuisineEquality);
+        return (idEquality && restaurantNameEquality && cuisineEquality);
       }
     }
 
@@ -45,6 +42,16 @@ namespace BestRestaurants.Models
     public string GetRestaurantName()
     {
       return _restaurantName;
+    }
+
+    public int GetId()
+    {
+      return _id;
+    }
+
+    public int GetCuisineId()
+    {
+      return _cuisineId;
     }
 
     public void UpdateRestaurantName(string newRestaurantName)
@@ -93,16 +100,6 @@ namespace BestRestaurants.Models
       {
           conn.Dispose();
       }
-    }
-
-    public int GetId()
-    {
-      return _id;
-    }
-
-    public int GetCuisineId()
-    {
-      return _cuisineId;
     }
 
     public void Save()

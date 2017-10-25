@@ -17,6 +17,7 @@ namespace BestRestaurants.Tests
         {
           Restaurant.DeleteAll();
           Cuisine.DeleteAll();
+          Review.DeleteAll();
         }
 
        [TestMethod]

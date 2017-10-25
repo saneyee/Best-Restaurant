@@ -5,9 +5,7 @@ using System;
 
 namespace BestRestaurants.Tests
 {
-
   [TestClass]
-  // public class RestaurantTests : IDisposable
   public class RestaurantTests : IDisposable
   {
     public RestaurantTests()
@@ -19,6 +17,7 @@ namespace BestRestaurants.Tests
     {
       Restaurant.DeleteAll();
       Cuisine.DeleteAll();
+      Review.DeleteAll();
     }
 
     [TestMethod]

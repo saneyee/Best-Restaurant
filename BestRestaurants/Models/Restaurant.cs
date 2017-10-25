@@ -54,6 +54,37 @@ namespace BestRestaurants.Models
       return _cuisineId;
     }
 
+    public List<Review> GetReview()
+    {
+        List<Review> allRestaurantReviews = new List<Review> {};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM reviews WHERE restaurant_id = @restaurant_id;";
+
+        MySqlParameter restaurantId = new MySqlParameter();
+        restaurantId.ParameterName = "@restaurant_id";
+        restaurantId.Value = this._id;
+        cmd.Parameters.Add(restaurantId);
+
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int reviewId = rdr.GetInt32(0);
+          string reviewDescription = rdr.GetString(1);
+          int reviewRestaurantId = rdr.GetInt32(2);
+
+          Review newReview = new Review(reviewDescription, reviewRestaurantId, reviewId);
+          allRestaurantReviews.Add(newReview);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return allRestaurantReviews;
+    }
+
     public void UpdateRestaurantName(string newRestaurantName)
     {
       MySqlConnection conn = DB.Connection();

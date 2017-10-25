@@ -83,6 +83,43 @@ namespace BestRestaurants.Controllers
       return View("CuisineOutlets", model);
     }
 
+    [HttpGet("/restaurant/{name}/{id}/review")]
+    public ActionResult AddReviewViewRestaurantReviews(int id)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Restaurant selectedRestaurant = Restaurant.Find(id); //Restaurant is selected as an object
+      List<Review> restaurantReviews = selectedRestaurant.GetReview(); //Reviews of the selected restaurant are displayed in a list
+
+      model.Add("restaurant", selectedRestaurant);
+      model.Add("reviews", restaurantReviews);
+
+      //return the restaurant list for selected cuisine
+      return View("RestaurantReviews", model);
+    }
+
+    [HttpPost("/restaurant/{name}/{id}/review")]
+    public ActionResult ViewRestaurantReviews(int id)
+    {
+      Review newReview = new Review(Request.Form["review-description"], id);
+      newReview.Save();
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Restaurant selectedRestaurant = Restaurant.Find(id); //Restaurant is selected as an object
+      List<Review> restaurantReviews = selectedRestaurant.GetReview(); //Reviews of the selected restaurant are displayed in a list
+
+      model.Add("restaurant", selectedRestaurant);
+      model.Add("reviews", restaurantReviews);
+
+      //return the restaurant list for selected cuisine
+      return View("RestaurantReviews", model);
+    }
+
+    [HttpGet("/restaurants/{id}/review/add")]
+    public ActionResult AddReview(int id)
+    {
+      Restaurant selectedRestaurant = Restaurant.Find(id);
+      return View(selectedRestaurant);
+    }
+
     [HttpGet("/restaurants/{id}/edit")]
     public ActionResult RestaurantEdit(int id)
     {

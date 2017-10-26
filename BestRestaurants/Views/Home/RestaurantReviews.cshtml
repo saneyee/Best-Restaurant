@@ -1,3 +1,11 @@
+@{
+  Layout = "_Layout";
+
+}
+
+
+
+<body>
 <h1>Reviews for @Model["restaurant"].GetRestaurantName()</h1>
 
 <ul>
@@ -9,3 +17,4 @@
 
 <a href="/restaurants/@Model["restaurant"].GetId()/review/add">Add Review</a>
 <a href="/">Home Page</a>
+</body>

@@ -1,5 +1,13 @@
-<h1> List of @Model["cuisine"].GetName() restaurants</h1>
+@{
+  Layout = "_Layout";
+
+}
+
+
+
 <body>
+<h1> List of @Model["cuisine"].GetName() restaurants</h1>
+
   @if (@Model["restaurants"].Count == 0)
   {
     <h3>No restaurants have been added yet!</h3>

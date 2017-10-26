@@ -1,3 +1,11 @@
+@{
+  Layout = "_Layout";
+
+}
+
+
+
+<body>
 <h1>Best Restaurants</h1>
 <hr>
 @if (@Model["restaurant"].Count == 0)
@@ -29,6 +37,8 @@
   </tr>
 }
 </table>
-
+<br>
+<br>
 <a href="/cuisine/add">Add Cuisine</a> <br>
 <a href="/cuisine/list">View Cuisines</a>
+</body>

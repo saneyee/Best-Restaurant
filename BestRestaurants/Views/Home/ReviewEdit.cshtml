@@ -1,3 +1,11 @@
+@{
+  Layout = "_Layout";
+
+}
+
+
+
+<body>
 <h1>Edit Review for @Model["restaurant"].GetRestaurantName()</h1>
 <hr>
 <form action="/@Model["restaurant"].GetId()/review/@Model["review"].GetId()/edit" method="post">
@@ -6,3 +14,4 @@
     <button type="submit">Update</button>
 </form>
 <h4><a href="/">Return home</a></h4>
+</body>

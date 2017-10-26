@@ -1,3 +1,11 @@
+@{
+  Layout = "_Layout";
+
+}
+
+
+
+<body>
 <h1>Add Restaurant for @Model.GetName()</h1>
 
 <form action="/@Model.GetName()/@Model.GetId()/restaurantlist" method="post">
@@ -8,3 +16,4 @@
 
 <a href="/@Model.GetName()/@Model.GetId()/restaurantlist">View Restaurant List</a><br>
 <a href="/">HomePage</a>
+</body>

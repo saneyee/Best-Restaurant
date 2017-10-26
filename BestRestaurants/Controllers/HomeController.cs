@@ -177,24 +177,8 @@ namespace BestRestaurants.Controllers
       return View("RestaurantReviews", model);
     }
 
-    [HttpPost("/{restaurant_id}/review/{id}/edit")]
-    public ActionResult ReviewEditConfirm(int restaurant_id, int id)
-    {
-      Review thisReview = Review.Find(id);
-      thisReview.UpdateReview(Request.Form["new-review"]);
-
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      Restaurant selectedRestaurant = Restaurant.Find(restaurant_id); //Restaurant is selected as an object
-      List<Review> restaurantReviews = selectedRestaurant.GetReview(); //Reviews of the selected restaurant are displayed in a list
-
-      model.Add("restaurant", selectedRestaurant);
-      model.Add("reviews", restaurantReviews);
-
-      return View("RestaurantReviews", model);
-    }
-
     [HttpGet("/{restaurant_id}/review/{id}/delete")]
-    public ActionResult ReviewDeleteConfirm(int id)
+    public ActionResult ReviewDeleteConfirm(int restaurant_id, int id)
     {
       Review thisReview = Review.Find(id);
       thisReview.DeleteReview();

@@ -97,6 +97,7 @@ namespace BestRestaurants.Controllers
       return View("RestaurantReviews", model);
     }
 
+    //id is restaurant id
     [HttpPost("/restaurant/{name}/{id}/review")]
     public ActionResult ViewRestaurantReviews(int id)
     {
@@ -113,6 +114,7 @@ namespace BestRestaurants.Controllers
       return View("RestaurantReviews", model);
     }
 
+    //id is restaurant id
     [HttpGet("/restaurants/{id}/review/add")]
     public ActionResult AddReview(int id)
     {
@@ -123,13 +125,6 @@ namespace BestRestaurants.Controllers
     [HttpGet("/restaurants/{id}/edit")]
     public ActionResult RestaurantEdit(int id)
     {
-      // Dictionary<string, object> model = new Dictionary<string, object>();
-      // Cuisine selectedCuisine = Cuisine.Find(id); //Cuisine is selected as an object
-      // List<Restaurant> cuisineRestaurants = selectedCuisine.GetRestaurants(); //Restaurants are displayed in a list
-      //
-      // model.Add("cuisine", selectedCuisine);
-      // model.Add("restaurants", cuisineRestaurants);
-
       Restaurant thisRestaurant = Restaurant.Find(id);
       return View(thisRestaurant);
     }
@@ -141,6 +136,7 @@ namespace BestRestaurants.Controllers
       thisRestaurant.UpdateRestaurantName(Request.Form["new-name"]);
       return RedirectToAction("Index");
     }
+
     [HttpGet("/restaurants/{id}/delete")]
     public ActionResult RestaurantDeleteConfirm(int id)
     {
@@ -148,6 +144,39 @@ namespace BestRestaurants.Controllers
       thisRestaurant.DeleteRestaurant();
       return RedirectToAction("Index");
     }
+
+    //Id is review id
+    [HttpGet("/{restaurant_id}/review/{id}/edit")]
+    public ActionResult EditRestaurantReview(int restaurant_id, int id)
+    {
+      Review thisReview = Review.Find(id);
+
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Restaurant selectedRestaurant = Restaurant.Find(restaurant_id); //Restaurant is selected as an object
+
+      model.Add("restaurant", selectedRestaurant);
+      model.Add("review", thisReview);
+
+      return View("ReviewEdit", model);
+    }
+
+    //Id is review id
+    [HttpPost("/{restaurant_id}/review/{id}/edit")]
+    public ActionResult ReviewEditConfirm(int restaurant_id, int id)
+    {
+      Review thisReview = Review.Find(id);
+      thisReview.UpdateReview(Request.Form["new-review"]);
+
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Restaurant selectedRestaurant = Restaurant.Find(restaurant_id); //Restaurant is selected as an object
+      List<Review> restaurantReviews = selectedRestaurant.GetReview(); //Reviews of the selected restaurant are displayed in a list
+
+      model.Add("restaurant", selectedRestaurant);
+      model.Add("reviews", restaurantReviews);
+
+      return View("RestaurantReviews", model);
+    }
+
 
 
   }

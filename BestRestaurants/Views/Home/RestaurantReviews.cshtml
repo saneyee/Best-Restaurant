@@ -3,7 +3,7 @@
 <ul>
   @foreach (var review in Model["reviews"])
   {
-    <li>@review.GetId() | @review.GetDescription()</li>
+    <li>@review.GetId() | @review.GetDescription() | <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/edit">Edit</a> | <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/delete">Delete</a></li>
   }
 </ul>
 

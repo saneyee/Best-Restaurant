@@ -1,0 +1,10 @@
+<h1>Edit Review for @Model["restaurant"].GetRestaurantName()</h1>
+<hr>
+<form action="/@Model["restaurant"].GetId()/review/@Model["review"].GetId()/edit" method="post">
+    <label for="new-review">Review:</label>
+    <input type="text" name="new-review">
+    <label for="new-reviewer">Reviewed By:</label>
+    <input type="text" name="new-reviewer">
+    <button type="submit">Update</button>
+</form>
+<h4><a href="/">Return home</a></h4>

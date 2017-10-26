@@ -6,39 +6,43 @@
 
 
 <body>
-<h1>Best Restaurants</h1>
-<hr>
-@if (@Model["restaurant"].Count == 0)
-{
-  <h3>No restaurants have been added yet!</h3>
-}
+  <div class="container-fluid">
 
-<table>
-<tr>
-  <th><strong>Id</strong></th>
-  <th><strong>Restaurant</strong></th>
-  <th><strong>Cuisine</strong></th>
-</tr>
-@* Restaurants will be a list of Restaurant objects from the entire database *@
-@foreach (var restaurant in @Model["restaurant"])
-{
-  <tr>
-    <th>@restaurant.GetId()</th>
-    <th><a href="/restaurant/@restaurant.GetRestaurantName()/@restaurant.GetId()/review">@restaurant.GetRestaurantName()</a></th>
-    <th>
-    @foreach(var cuisine in @Model["cuisines"])
+    <h1>Best Restaurants</h1>
+    <hr>
+    @if (@Model["restaurant"].Count == 0)
     {
-      @if (@cuisine.GetId() == @restaurant.GetCuisineId())
-      {
-        @cuisine.GetName();
-      }
+      <h3>No restaurants have been added yet!</h3>
     }
-    </th>
-  </tr>
-}
-</table>
-<br>
-<br>
-<a href="/cuisine/add">Add Cuisine</a> <br>
-<a href="/cuisine/list">View Cuisines</a>
+
+    <table>
+      <tr>
+        <th><strong>Id</strong></th>
+        <th><strong>Restaurant</strong></th>
+        <th><strong>Cuisine</strong></th>
+      </tr>
+      @* Restaurants will be a list of Restaurant objects from the entire database *@
+      @foreach (var restaurant in @Model["restaurant"])
+      {
+        <tr>
+        <th>@restaurant.GetId()</th>
+        <th><a href="/restaurant/@restaurant.GetRestaurantName()/@restaurant.GetId()/review">@restaurant.GetRestaurantName()</a></th>
+        <th>
+        @foreach(var cuisine in @Model["cuisines"])
+        {
+          @if (@cuisine.GetId() == @restaurant.GetCuisineId())
+          {
+            @cuisine.GetName();
+          }
+        }
+        </th>
+        </tr>
+      }
+    </table>
+    <br>
+    <br>
+    <a href="/cuisine/add">Add Cuisine</a> <br>
+    <a href="/cuisine/list">View Cuisines</a>
+  </div>
+
 </body>

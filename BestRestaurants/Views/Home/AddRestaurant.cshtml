@@ -3,17 +3,17 @@
 
 }
 
-
-
 <body>
-<h1>Add Restaurant for @Model.GetName()</h1>
+  <div class="container-fluid">
+    <h1>Add Restaurant for @Model.GetName()</h1>
 
-<form action="/@Model.GetName()/@Model.GetId()/restaurantlist" method="post">
-  <label for="restaurant-name">New Restaurant</label>
-  <input type="text" name="restaurant-name" class="form-control">
-  <button type="submit" name="button">Add Restaurant</button>
-</form>
+    <form action="/@Model.GetName()/@Model.GetId()/restaurantlist" method="post">
+      <label for="restaurant-name">New Restaurant</label><br>
+      <input type="text" name="restaurant-name" class="form-control">
+      <button type="submit" name="button" class="btn btn-default">Add Restaurant</button>
+    </form>
 
-<a href="/@Model.GetName()/@Model.GetId()/restaurantlist">View Restaurant List</a><br>
-<a href="/">HomePage</a>
+    <a href="/@Model.GetName()/@Model.GetId()/restaurantlist">View Restaurant List</a><br>
+    <a href="/">HomePage</a>
+  </div>
 </body>

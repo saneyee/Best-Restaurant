@@ -6,14 +6,16 @@
 
 
 <body>
-<h1>Add a Cuisine</h1>
+  <div class="container-fluid">
+    <h1>Add a Cuisine</h1>
 
-<form action="/cuisine/list" method="post">
-  <label for="cuisine-name">New Cuisine</label>
-  <input type="text" name="cuisine-name" class="form-control">
-  <button type="submit" class="btn" name="button">Add Cuisine</button>
-</form>
+    <form action="/cuisine/list" method="post">
+      <label for="cuisine-name">New Cuisine</label>
+      <input type="text" name="cuisine-name" class="form-control"><br>
+      <button type="submit" class="btn btn-default">Add Cuisine</button>
+    </form><br>
 
-<a href="/cuisine/list">View Cuisines</a>
-<a href="/">HomePage</a>
+    <a href="/cuisine/list">View Cuisines</a><br>
+    <a href="/">HomePage</a>
+  </div>
 </body>

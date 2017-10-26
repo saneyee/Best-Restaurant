@@ -6,15 +6,16 @@
 
 
 <body>
-<h1>Reviews for @Model["restaurant"].GetRestaurantName()</h1>
+  <div class="container-fluid">
+    <h1>Reviews for @Model["restaurant"].GetRestaurantName()</h1><br>
 
-<ul>
-  @foreach (var review in Model["reviews"])
-  {
-    <li>@review.GetId() | @review.GetDescription() | @review.GetReviewerName() <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/edit">Edit</a> | <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/delete">Delete</a></li>
-  }
-</ul>
-
-<a href="/restaurants/@Model["restaurant"].GetId()/review/add">Add Review</a>
-<a href="/">Home Page</a>
+    <ul>
+      @foreach (var review in Model["reviews"])
+      {
+        <li>@review.GetId() | @review.GetDescription() | @review.GetReviewerName() <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/edit">Edit</a> | <a href="/@Model["restaurant"].GetId()/review/@review.GetId()/delete">Delete</a></li>
+      }
+    </ul>
+    <a href="/restaurants/@Model["restaurant"].GetId()/review/add">Add Review</a><br>
+    <a href="/">Home Page</a>
+  </div>
 </body>

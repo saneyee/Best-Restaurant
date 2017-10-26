@@ -2,9 +2,7 @@
 <hr>
 <form action="/@Model["restaurant"].GetId()/review/@Model["review"].GetId()/edit" method="post">
     <label for="new-review">Review:</label>
-    <input type="text" name="new-review">
-    <label for="new-reviewer">Reviewed By:</label>
-    <input type="text" name="new-reviewer">
+    <input type="text" name="new-review" value="@Model["review"].GetDescription()">
     <button type="submit">Update</button>
 </form>
 <h4><a href="/">Return home</a></h4>

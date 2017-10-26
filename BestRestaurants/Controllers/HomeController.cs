@@ -12,8 +12,12 @@ namespace BestRestaurants.Controllers
     {
       Dictionary<string, object> model = new Dictionary<string, object>();
       List<Restaurant> allRestaurants = Restaurant.GetAll();
+      List<Cuisine> allCuisines = Cuisine.GetAll();
 
-      return View(allRestaurants);
+      model.Add("restaurant",allRestaurants);
+      model.Add("cuisines",allCuisines);
+
+      return View("Index",model);
     }
 
     [HttpGet("/cuisine/add")]
@@ -84,7 +88,7 @@ namespace BestRestaurants.Controllers
     }
 
     [HttpGet("/restaurant/{name}/{id}/review")]
-    public ActionResult AddReviewViewRestaurantReviews(int id)
+    public ActionResult ViewRestaurantReviews(int id)
     {
       Dictionary<string, object> model = new Dictionary<string, object>();
       Restaurant selectedRestaurant = Restaurant.Find(id); //Restaurant is selected as an object
@@ -99,9 +103,9 @@ namespace BestRestaurants.Controllers
 
     //id is restaurant id
     [HttpPost("/restaurant/{name}/{id}/review")]
-    public ActionResult ViewRestaurantReviews(int id)
+    public ActionResult AddReviewViewRestaurantReviews(int id)
     {
-      Review newReview = new Review(Request.Form["review-description"], id);
+      Review newReview = new Review(Request.Form["review-description"],id,Request.Form["reviewer"]);
       newReview.Save();
       Dictionary<string, object> model = new Dictionary<string, object>();
       Restaurant selectedRestaurant = Restaurant.Find(id); //Restaurant is selected as an object

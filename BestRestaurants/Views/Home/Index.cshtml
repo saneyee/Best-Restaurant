@@ -1,6 +1,6 @@
-<h1>Best Restaurants Homepage</h1>
+<h1>Best Restaurants</h1>
 <hr>
-@if (@Model.Count == 0)
+@if (@Model["restaurant"].Count == 0)
 {
   <h3>No restaurants have been added yet!</h3>
 }
@@ -12,12 +12,20 @@
   <th><strong>Cuisine</strong></th>
 </tr>
 @* Restaurants will be a list of Restaurant objects from the entire database *@
-@foreach (var restaurant in Model)
+@foreach (var restaurant in @Model["restaurant"])
 {
   <tr>
     <th>@restaurant.GetId()</th>
     <th><a href="/restaurant/@restaurant.GetRestaurantName()/@restaurant.GetId()/review">@restaurant.GetRestaurantName()</a></th>
-    <th>@restaurant.GetCuisineId()</th>
+    <th>
+    @foreach(var cuisine in @Model["cuisines"])
+    {
+      @if (@cuisine.GetId() == @restaurant.GetCuisineId())
+      {
+        @cuisine.GetName();
+      }
+    }
+    </th>
   </tr>
 }
 </table>

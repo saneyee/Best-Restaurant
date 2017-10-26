@@ -8,12 +8,14 @@ namespace BestRestaurants.Models
   {
     private string _description;
     private int _id;
+    private string _reviewerName;
     private int _restaurantId;
 
-    public Review(string description, int restaurantId, int Id = 0 )
+    public Review(string description, int restaurantId, string reviewerName,int Id = 0 )
     {
       _description = description;
       _restaurantId = restaurantId;
+      _reviewerName = reviewerName;
       _id = Id;
     }
 
@@ -28,9 +30,10 @@ namespace BestRestaurants.Models
         Review newReview = (Review) otherReview;
         bool idEquality = (this.GetId() == newReview.GetId());
         bool descriptionEquality = (this.GetDescription() == newReview.GetDescription());
+        bool reviewerNameEquality = (this.GetReviewerName() == newReview.GetReviewerName());
         bool restaurantIdEquality = this.GetRestaurantId() == newReview.GetRestaurantId();
 
-        return (idEquality && descriptionEquality && restaurantIdEquality);
+        return (idEquality && descriptionEquality && reviewerNameEquality && restaurantIdEquality);
       }
     }
 
@@ -47,6 +50,10 @@ namespace BestRestaurants.Models
     public int GetId()
     {
       return _id;
+    }
+    public string GetReviewerName()
+    {
+      return _reviewerName;
     }
 
     public int GetRestaurantId()
@@ -71,8 +78,10 @@ namespace BestRestaurants.Models
       description.Value = newDescription;
       cmd.Parameters.Add(description);
 
+
       cmd.ExecuteNonQuery();
       _description = newDescription;
+
 
       conn.Close();
       if (conn != null)
@@ -108,12 +117,18 @@ namespace BestRestaurants.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO reviews (description, restaurant_id) VALUES (@description, @restaurant_id);";
+      cmd.CommandText = @"INSERT INTO reviews (description, reviewer_name, restaurant_id) VALUES (@description,@reviewer_name, @restaurant_id);";
 
       MySqlParameter description = new MySqlParameter();
       description.ParameterName = "@description";
       description.Value = this._description;
       cmd.Parameters.Add(description);
+
+      MySqlParameter reviewerName = new MySqlParameter();
+      reviewerName.ParameterName = "@reviewer_name";
+      reviewerName.Value = this._reviewerName;
+      cmd.Parameters.Add(reviewerName);
+
 
       MySqlParameter restaurantId = new MySqlParameter();
       restaurantId.ParameterName = "@restaurant_id";
@@ -141,9 +156,10 @@ namespace BestRestaurants.Models
       {
         int reviewId = rdr.GetInt32(0);
         string reviewDescription = rdr.GetString(1);
-        int reviewRestaurantId = rdr.GetInt32(2);
+        string rereviewerName = rdr.GetString(2);
+        int reviewRestaurantId = rdr.GetInt32(3);
 
-        Review newReview = new Review(reviewDescription, reviewRestaurantId, reviewId);
+        Review newReview = new Review(reviewDescription, reviewRestaurantId, rereviewerName, reviewId);
         allReviews.Add(newReview);
       }
       conn.Close();
@@ -170,6 +186,7 @@ namespace BestRestaurants.Models
 
       int reviewId = 0;
       string reviewDescription = "";
+      string rereviewerName = "";
       int reviewRestaurantId = 0;
 
 
@@ -177,10 +194,11 @@ namespace BestRestaurants.Models
       {
         reviewId = rdr.GetInt32(0);
         reviewDescription = rdr.GetString(1);
-        reviewRestaurantId = rdr.GetInt32(2);
+        rereviewerName = rdr.GetString(2);
+        reviewRestaurantId = rdr.GetInt32(3);
       }
 
-      Review newReview = new Review(reviewDescription, reviewRestaurantId, reviewId);
+      Review newReview = new Review(reviewDescription, reviewRestaurantId, rereviewerName, reviewId);
       conn.Close();
       if (conn != null)
       {

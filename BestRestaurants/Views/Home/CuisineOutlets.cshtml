@@ -1,4 +1,4 @@
-<h1>Task List for @Model["cuisine"].GetName()</h1>
+<h1> List of @Model["cuisine"].GetName() restaurants</h1>
 <body>
   @if (@Model["restaurants"].Count == 0)
   {
@@ -13,7 +13,8 @@
     {
       <tr>
       <td>@restaurant.GetId()</td>
-      <td><a href="/restaurant/@restaurant.GetRestaurantName()/@restaurant.GetId()/review">@restaurant.GetRestaurantName()</a> | <a href="/restaurants/@restaurant.GetId()/edit">Edit</a> | <a href="/restaurants/@restaurant.GetId()/delete">Delete</a></td>
+      <td><a href="/restaurant/@restaurant.GetRestaurantName()/@restaurant.GetId()/review">@restaurant.GetRestaurantName()</a> | <a href="/restaurants/@restaurant.GetId()/edit">Edit</a> | <a href="/restaurants/@restaurant.GetId()/delete">Delete</a>
+      </td>
       </tr>
     }
   </table>

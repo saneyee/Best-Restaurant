@@ -72,9 +72,10 @@ namespace BestRestaurants.Models
         {
           int reviewId = rdr.GetInt32(0);
           string reviewDescription = rdr.GetString(1);
-          int reviewRestaurantId = rdr.GetInt32(2);
+          string reviewerName = rdr.GetString(2);
+          int reviewRestaurantId = rdr.GetInt32(3);
 
-          Review newReview = new Review(reviewDescription, reviewRestaurantId, reviewId);
+          Review newReview = new Review(reviewDescription, reviewRestaurantId, reviewerName, reviewId);
           allRestaurantReviews.Add(newReview);
         }
         conn.Close();
